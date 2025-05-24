@@ -11,24 +11,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: gtest
-        run:  sudo apt-get install libgtest-dev
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           submodules: recursive
-      - name: ls
-        working-directory: third-party
-        run: ls gtest
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lcov
       - name: Configure CMake
         run: |
           cmake -H. -Bbuild -DBUILD_TESTS=ON
-      - name: ls
-        run: ls
       - name: Build project
         run: |
           cmake --build build
-
+      - name: ls
+        run: ls build
       - name: Run tests
         run: |
           cd build && ctest --output-on-failure
