@@ -1,7 +1,6 @@
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 cmake_minimum_required(VERSION 3.4)
-option(COVERAGE "Check coverage" ON)
 
 project(lab5)
 
@@ -15,11 +14,4 @@ if(BUILD_TESTS)
   enable_testing()
   add_test(NAME check_acc COMMAND check_acc)
   add_test(NAME check_tr COMMAND check_tr)
-endif()
-
-if (COVERAGE)
-	target_compile_options(check_acc PRIVATE --coverage)
-	target_link_libraries(check_acc --coverage)
-  target_compile_options(check_tr PRIVATE --coverage)
-	target_link_libraries(check_tr --coverage)
 endif()
