@@ -12,4 +12,6 @@ add_subdirectory(third-party/gtest)
 
 if(BUILD_TESTS)
   enable_testing()
+  add_test(NAME check_acc COMMAND check_acc)
+  add_test(NAME check_tr COMMAND check_tr)
 endif()
