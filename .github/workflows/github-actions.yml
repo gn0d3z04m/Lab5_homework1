@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: gtest
+        run:  sudo apt-get install libgtest-dev
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: ls
+        working-directory: third-party
+        run: ls gtest
+      - name: Configure CMake
+        run: |
+          cmake -H. -Bbuild -DBUILD_TESTS=ON
+      - name: ls
+        run: ls
+      - name: Build project
+        run: |
+          cmake --build build
+
+      - name: Run tests
+        run: |
+          cd _build && ctest --output-on-failure
+
+      - name: Generate coverage report
+        run: |
+          cd _build
+          lcov --capture --directory . --output-file coverage.info
+          lcov --remove coverage.info '/usr/*' --output-file coverage.info
+          lcov --list coverage.info
+
+      - name: Upload to Coveralls
+        uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: _build/coverage.info
