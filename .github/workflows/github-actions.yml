@@ -35,12 +35,12 @@ jobs:
           lcov --help
       - name: gcov
         run: |
-          cd build/tests
+          cd tests
           gcov test_account.cpp
           gcov test_transaction.cpp
       - name: Generate coverage report
         run: |
-          cd build/tests
+          cd build
           lcov -c -d . --output-file coverage.info
 
       - name: Coveralls GitHub Action
