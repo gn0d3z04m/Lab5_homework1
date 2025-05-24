@@ -36,7 +36,7 @@ jobs:
       - name: Generate coverage report
         run: |
           cd build
-          lcov -c -d . --output-file --ignore-errors mismatch coverage.info
+          lcov -c -d . --ignore-errors mismatch --output-file coverage.info
 
       - name: Coveralls GitHub Action
         uses: coverallsapp/github-action@v2
