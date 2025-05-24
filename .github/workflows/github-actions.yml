@@ -30,10 +30,13 @@ jobs:
           cmake --build build --target test -- ARGS=--verbose
       - name: ls
         run: ls build
+      - name: Install dependencies
+        run: |
+          lcov --help
       - name: Generate coverage report
         run: |
           cd build/tests
-          lcov --coverage --directory . --output-file coverage.info
+          lcov -c -d . --output-file coverage.info
 
       - name: Coveralls GitHub Action
         uses: coverallsapp/github-action@v2
