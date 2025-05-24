@@ -25,12 +25,11 @@ jobs:
       - name: Build project
         run: |
           cmake --build build
-      - name: ls
-        run: ls build
       - name: Run tests
         run: |
           cmake --build build --target test -- ARGS=--verbose
-
+      - name: ls
+        run: ls build
       - name: Generate coverage report
         run: |
           cd build
@@ -38,7 +37,7 @@ jobs:
           lcov --remove coverage.info '/usr/*' --output-file coverage.info
           lcov --list coverage.info
 
-      - name: Upload to Coveralls
+      - name: Coveralls GitHub Action
         uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
