@@ -32,7 +32,7 @@ jobs:
         run: ls build
       - name: Generate coverage report
         run: |
-          cd build
+          cd build/tests
           lcov --coverage --directory . --output-file coverage.info
 
       - name: Coveralls GitHub Action
