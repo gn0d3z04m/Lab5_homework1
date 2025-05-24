@@ -29,7 +29,7 @@ jobs:
         run: ls build
       - name: Run tests
         run: |
-          cd tests && ctest --output-on-failure
+          cmake --build build --target test -- ARGS=--verbose
 
       - name: Generate coverage report
         run: |
