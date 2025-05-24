@@ -35,7 +35,7 @@ jobs:
           lcov --help
       - name: Generate coverage report
         run: |
-          cd build/tests
+          cd build
           lcov -c -d . --output-file coverage.info
 
       - name: Coveralls GitHub Action
