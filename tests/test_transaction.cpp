@@ -19,7 +19,7 @@ TEST(Transaction, Mock) {
 	tr.Make(ac2, ac1, 500);
 	tr.Make(ac2, ac1, 300);
 	tr.Make(ac1, ac1, 0);
-	tr.Make(ac1, ac2, -4);
+	tr.Make(ac1, ac2, -1);
 	tr.Make(ac1, ac2, 99);
 }
 
