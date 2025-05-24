@@ -33,9 +33,7 @@ jobs:
       - name: Generate coverage report
         run: |
           cd build
-          lcov --capture --directory . --output-file coverage.info
-          lcov --remove coverage.info '/usr/*' --output-file coverage.info
-          lcov --list coverage.info
+          lcov --coverage --directory . --output-file coverage.info
 
       - name: Coveralls GitHub Action
         uses: coverallsapp/github-action@v2
