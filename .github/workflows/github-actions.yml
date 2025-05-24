@@ -33,11 +33,6 @@ jobs:
       - name: Install dependencies
         run: |
           lcov --help
-      - name: gcov
-        run: |
-          cd tests
-          gcov test_account.cpp
-          gcov test_transaction.cpp
       - name: Generate coverage report
         run: |
           cd build
