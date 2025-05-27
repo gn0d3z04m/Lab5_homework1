@@ -19,7 +19,7 @@ TEST(Transaction, Mock) {
 	EXPECT_CALL(ac1, ChangeBalance(testing::_)).Times(1);
 	EXPECT_CALL(ac2, ChangeBalance(testing::_)).Times(1);
 	tr.set_fee(100);
-	tr.Make(ac2, ac1, 199);
+	tr.Make(ac2, ac1, 300);
 }
 
 TEST(Transaction, SimpleTest) {
