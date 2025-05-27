@@ -3,11 +3,6 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-using testing::_;
-using testing::Throw;
-using testing::Return;
-using testing::AtLeast;
-
 
 class MockAccount : public Account {
 public:
@@ -57,7 +52,7 @@ TEST(TransactionTest, DebitFailureRollback) {
     Transaction tr;
     tr.set_fee(10);
     
-    ON_CALL(from, GetBalance()).WillByDefault(Return(300));
+    ON_CALL(from, GetBalance()).WillByDefault(testing::Return(300));
     EXPECT_CALL(to, ChangeBalance(200)).Times(1);
     EXPECT_CALL(to, ChangeBalance(-200)).Times(1); // Rollback
     
@@ -68,7 +63,7 @@ TEST(TransactionTest, SuccessfulTransaction) {
     MockAccount from(1, 1000), to(2, 500);
     MockTransaction tr;
     
-    EXPECT_CALL(tr, SaveToDataBase(_, _, 800)).Times(1);
+    EXPECT_CALL(tr, SaveToDataBase(testing::_, testing::_, 800)).Times(1);
     EXPECT_CALL(from, ChangeBalance(-810)).Times(1);
     EXPECT_CALL(to, ChangeBalance(800)).Times(1);
     
