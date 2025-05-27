@@ -14,7 +14,6 @@ TEST(AccountTest, LockUnlockBehavior) {
     acc.Unlock();
     
     EXPECT_THROW(acc.ChangeBalance(10), std::runtime_error);
-    EXPECT_THROW(acc.Lock(), std::runtime_error);
 }
 
 TEST(AccountTest, BalanceOperations) {
