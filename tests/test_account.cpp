@@ -1,13 +1,31 @@
 #include "Account.h"
 #include <gtest/gtest.h>
+using ::testing::_;
+using ::testing::Throw;
+using ::testing::Return;
+using ::testing::AtLeast;
 
-TEST(Account, SimpleTest) {
-	Account acc(1, 100);
-	EXPECT_EQ(acc.id(), 1);
-	EXPECT_EQ(acc.GetBalance(), 100);
-	EXPECT_THROW(acc.ChangeBalance(100), std::runtime_error);
-	EXPECT_NO_THROW(acc.Lock());
-	acc.ChangeBalance(100);
-	EXPECT_EQ(acc.GetBalance(), 200);
-	EXPECT_THROW(acc.Lock(), std::runtime_error);
+TEST(AccountTest, ConstructorInitializesValues) {
+    Account acc(123, 500);
+    EXPECT_EQ(acc.id(), 123);
+    EXPECT_EQ(acc.GetBalance(), 500);
+}
+
+TEST(AccountTest, LockUnlockBehavior) {
+    Account acc(1, 100);
+    acc.Lock();
+    EXPECT_NO_THROW(acc.ChangeBalance(10));
+    acc.Unlock();
+    
+    EXPECT_THROW(acc.ChangeBalance(10), std::runtime_error);
+    EXPECT_THROW(acc.Lock(), std::runtime_error);
+}
+
+TEST(AccountTest, BalanceOperations) {
+    Account acc(1, 200);
+    acc.Lock();
+    acc.ChangeBalance(-50);
+    EXPECT_EQ(acc.GetBalance(), 150);
+    acc.ChangeBalance(100);
+    EXPECT_EQ(acc.GetBalance(), 250);
 }
