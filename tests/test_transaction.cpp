@@ -3,24 +3,23 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-class TransactionMock : public Transaction {
+class AccountMock : public Account {
 public:
-	MOCK_METHOD3(Make, bool(Account& from, Account& to, int sum));
+	AccountMock(int id, int balance) : Account(id, balance) {}
+	MOCK_CONST_METHOD0(GetBalance, int());
+	MOCK_METHOD1(ChangeBalance, void(int diff));
+	MOCK_METHOD0(Lock, void());
+	MOCK_METHOD0(Unlock, void());
 };
 
 TEST(Transaction, Mock) {
-	TransactionMock tr;
-	Account ac1(1, 50);
-	Account ac2(2, 500);
-	EXPECT_CALL(tr, Make(testing::_, testing::_, testing::_))
-	.Times(6);
+	Transaction tr;
+	AccountMock ac1(1, 50);
+	AccountMock ac2(2, 500);
+	EXPECT_CALL(ac1, ChangeBalance(testing::_))
+	EXPECT_CALL(ac2, ChangeBalance(testing::_))
 	tr.set_fee(100);
 	tr.Make(ac1, ac2, 199);
-	tr.Make(ac2, ac1, 500);
-	tr.Make(ac2, ac1, 300);
-	tr.Make(ac1, ac1, 0);
-	tr.Make(ac1, ac2, -1); 
-	tr.Make(ac1, ac2, 99); 
 }
 
 TEST(Transaction, SimpleTest) {
