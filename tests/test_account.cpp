@@ -1,9 +1,5 @@
 #include "Account.h"
 #include <gtest/gtest.h>
-using testing::_;
-using testing::Throw;
-using testing::Return;
-using testing::AtLeast;
 
 TEST(AccountTest, ConstructorInitializesValues) {
     Account acc(123, 500);
