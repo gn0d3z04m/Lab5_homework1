@@ -4,6 +4,11 @@
 #include <gmock/gmock.h>
 
 
+using testing::_;
+using testing::Throw;
+using testing::Return;
+using testing::AtLeast;
+
 class MockAccount : public Account {
 public:
     MockAccount(int id, int balance) : Account(id, balance) {}
