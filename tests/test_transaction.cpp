@@ -3,10 +3,10 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-using ::testing::_;
-using ::testing::Throw;
-using ::testing::Return;
-using ::testing::AtLeast;
+using testing::_;
+using testing::Throw;
+using testing::Return;
+using testing::AtLeast;
 
 
 class MockAccount : public Account {
