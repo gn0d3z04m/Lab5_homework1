@@ -16,6 +16,8 @@ target_link_options(check_acc PRIVATE --coverage)
 target_compile_options(check_tr PRIVATE --coverage)
 target_link_options(check_tr PRIVATE --coverage)
 
+target_include_directories(banking PUBLIC banking)
+
 if(BUILD_TESTS)
   enable_testing()
   add_test(NAME check_acc COMMAND check_acc)
