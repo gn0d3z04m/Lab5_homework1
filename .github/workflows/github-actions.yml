@@ -27,8 +27,8 @@ jobs:
           cmake --build build
       - name: Run tests
         run: |
-          build/check_acc
-          build/check_tr
+          build/tests/check_acc
+          build/tests/check_tr
       - name: ls
         run: |
           ls build
