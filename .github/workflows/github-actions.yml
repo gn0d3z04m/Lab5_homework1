@@ -21,7 +21,7 @@ jobs:
           sudo apt-get install -y lcov
       - name: Configure CMake
         run: |
-          cmake -H. -Bbuild -DBUILD_TESTS=ON
+          cmake -H. -Bbuild -DBUILD_TESTS=ON DCMAKE_CXX_FLAGS='--coverage'
       - name: Build project
         run: |
           cmake --build build
