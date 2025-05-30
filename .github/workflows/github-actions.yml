@@ -36,7 +36,7 @@ jobs:
       - name: Generate coverage report
         run: |
           cd build
-          lcov -c -d build/CMakeFiles/banking.dir/banking/ --include *.cpp --ignore-errors mismatch --output-file coverage.info
+          lcov -c -d banking --include *.cpp --ignore-errors mismatch --output-file coverage.info
 
       - name: Coveralls GitHub Action
         uses: coverallsapp/github-action@v2
