@@ -27,9 +27,12 @@ jobs:
           cmake --build build
       - name: Run tests
         run: |
-          cmake --build build --target test -- ARGS=--verbose
+          build/check_acc
+          build/check_tr
       - name: ls
-        run: ls build
+        run: |
+          ls build
+          ls build/CMakeFiles
       - name: f
         run: find build -name "*.gcov"
       - name: f1
