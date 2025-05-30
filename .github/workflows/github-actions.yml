@@ -31,8 +31,9 @@ jobs:
           build/tests/check_tr
       - name: ls
         run: |
-          ls build/Testing
-          ls build/tests
+          ls build/tests/CMakeFiles
+          echo " "
+          ls build/CMakeFiles
       - name: f
         run: find build -name "*.gcov"
       - name: f1
