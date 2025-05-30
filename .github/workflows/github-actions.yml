@@ -32,7 +32,6 @@ jobs:
       - name: ls
         run: |
           ls build/Testing
-          ls build/testing
           ls build/tests
       - name: f
         run: find build -name "*.gcov"
@@ -46,7 +45,7 @@ jobs:
       - name: Generate coverage report
         run: |
           cd build
-          lcov -c -d build/Testing --ignore-errors mismatch --output-file coverage.info
+          lcov -c -d build/tests --ignore-errors mismatch --output-file coverage.info
 
       - name: Coveralls GitHub Action
         uses: coverallsapp/github-action@v2
