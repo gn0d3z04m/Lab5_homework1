@@ -1,5 +1,7 @@
 ## Laboratory work V
 
+[![Coverage Status](https://coveralls.io/repos/github/gn0d3z04m/Lab5_homework1/badge.svg)](https://coveralls.io/github/gn0d3z04m/Lab5_homework1)
+
 Данная лабораторная работа посвещена изучению фреймворков для тестирования на примере **GTest**
 
 ```sh
@@ -155,7 +157,6 @@ $ gist REPORT.md
 - [Boost.Tests](http://www.boost.org/doc/libs/1_63_0/libs/test/doc/html/)
 - [Catch](https://github.com/catchorg/Catch2)
 
-[![Coverage Status](https://coveralls.io/repos/github/gn0d3z04m/Lab5_homework1/badge.svg)](https://coveralls.io/github/gn0d3z04m/Lab5_homework1)
 
 ```
 Copyright (c) 2015-2021 The ISC Authors
