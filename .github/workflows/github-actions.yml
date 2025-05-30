@@ -29,14 +29,14 @@ jobs:
         run: |
           cmake --build build --target test -- ARGS=--verbose
       - name: ls
-        run: ls build
+        run: ls build/CMakeFiles
       - name: Install dependencies
         run: |
           lcov --help
       - name: Generate coverage report
         run: |
           cd build
-          lcov -c -d banking --include *.cpp --ignore-errors mismatch --output-file coverage.info
+          lcov -c -d build/CMakeFiles/banking --include *.cpp --ignore-errors mismatch --output-file coverage.info
 
       - name: Coveralls GitHub Action
         uses: coverallsapp/github-action@v2
