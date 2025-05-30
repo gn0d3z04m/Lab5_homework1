@@ -31,18 +31,8 @@ jobs:
           build/tests/check_tr
       - name: ls
         run: |
-          ls build/tests/CMakeFiles
-          echo " "
-          ls build/CMakeFiles
-      - name: f
-        run: find build -name "*.gcov"
-      - name: f1
-        run: find build -name "*.lcov"
-      - name: f2
-        run: find build -name "*.cpp"
-      - name: Install dependencies
-        run: |
-          lcov --help
+          ls build/tests/CMakeFiles/check_acc.dir
+          ls build/tests/CMakeFiles/check_tr.dir
       - name: Generate coverage report
         run: |
           cd build
