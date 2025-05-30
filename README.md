@@ -1,6 +1,6 @@
 ## Laboratory work V
 
-[![Coverage Status](https://coveralls.io/repos/github/gn0d3z04m/Lab5_homework1/badge.svg)](https://coveralls.io/github/gn0d3z04m/Lab5_homework1)
+[![Coverage Status](https://coveralls.io/repos/github/gn0d3z04m/Lab5_homework1/badge.svg?branch=main)](https://coveralls.io/github/gn0d3z04m/Lab5_homework1?branch=main)
 
 Данная лабораторная работа посвещена изучению фреймворков для тестирования на примере **GTest**
 
