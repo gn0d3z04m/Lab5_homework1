@@ -33,7 +33,12 @@ jobs:
         run: |
           ls build
           echo " "
+          ls build/CMakeFiles
+          echo " "
           ls build/banking
+          echo " "
+          ls build/banking/CMakeFiles
+          echo " "
           echo " "
           ls build/tests
           echo " "
