@@ -38,3 +38,23 @@ TEST(Transaction, SimpleTest) {
 	EXPECT_FALSE(tr.Make(ac2, ac1, 500));
 	EXPECT_FALSE(tr.Make(ac2, ac1, 300));
 }
+
+TEST(Transaction, Make_ReturnsFalseIfInsufficientFunds) {
+    MockAccount from(1, 100);
+    MockAccount to(2, 500); 
+    EXPECT_CALL(from, Lock()).Times(1);
+    EXPECT_CALL(to, Lock()).Times(1);
+    EXPECT_CALL(from, Unlock()).Times(1);
+    EXPECT_CALL(to, Unlock()).Times(1);
+    EXPECT_CALL(from, GetBalance())
+        .WillOnce(Return(100))
+        .WillOnce(Return(100));
+    EXPECT_CALL(to, GetBalance())
+        .WillOnce(Return(500));
+    EXPECT_CALL(to, ChangeBalance(200)).Times(1); 
+    EXPECT_CALL(from, ChangeBalance(-200 - 10)).Times(0); 
+    EXPECT_CALL(to, ChangeBalance(-200)).Times(1);   
+    Transaction transaction;
+    transaction.set_fee(10); 
+    EXPECT_FALSE(transaction.Make(from, to, 200));
+}
