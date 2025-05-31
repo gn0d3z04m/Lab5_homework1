@@ -50,7 +50,7 @@ TEST(Transaction, Make_ReturnsFalseIfInsufficientFunds) {
         .WillOnce(testing::Return(100)) 
         .WillOnce(testing::Return(100)); 
     EXPECT_CALL(to, GetBalance())
-        .WillOnce(Return(500));
+        .WillOnce(testing::Return(500));
     EXPECT_CALL(to, ChangeBalance(200)).Times(1);     
     EXPECT_CALL(from, ChangeBalance(-200 - 10)).Times(0);  
     EXPECT_CALL(to, ChangeBalance(-200)).Times(1);      
