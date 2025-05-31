@@ -43,15 +43,27 @@ TEST(Transaction, SimpleTest) {
 	EXPECT_FALSE(tr.Make(ac2, ac1, 300));
 }
 
-TEST(TransactionTest, MakeTransfer) {
-    Account from(1, 500);
-    Account to(2, 300);
-    Transaction ts;
-    
-    from.Lock();
-    to.Lock();
-    
-    ASSERT_TRUE(ts.Make(from, to, 150));
-    ASSERT_EQ(from.GetBalance(), 500 - 150 - ts.fee());
-    ASSERT_EQ(to.GetBalance(), 300 + 150);
+TEST(Transaction, Make_ReturnsFalseIfInsufficientFunds) {
+    MockAccount from(1, 100); // На счету 100
+    MockAccount to(2, 500);   // На счету 500
+
+    // Настраиваем ожидания для вызовов
+    EXPECT_CALL(from, Lock()).Times(1);
+    EXPECT_CALL(to, Lock()).Times(1);
+    EXPECT_CALL(from, Unlock()).Times(1);
+    EXPECT_CALL(to, Unlock()).Times(1);
+    EXPECT_CALL(from, GetBalance())
+        .WillOnce(Return(100))  // Первый вызов
+        .WillOnce(Return(100)); // Второй вызов
+    EXPECT_CALL(to, GetBalance())
+        .WillOnce(Return(500)); // Первый вызов
+    EXPECT_CALL(to, ChangeBalance(200)).Times(1);           // Вызов ChangeBalance для получателя
+    EXPECT_CALL(from, ChangeBalance(-200 - 10)).Times(0);   // Не должно быть вызова для отправителя
+    EXPECT_CALL(to, ChangeBalance(-200)).Times(1);          // Откат ChangeBalance для получателя
+
+    Transaction transaction;
+    transaction.set_fee(10); // Устанавливаем комиссию 10
+
+    // Пытаемся перевести 200, что больше, чем на счету
+    EXPECT_FALSE(transaction.Make(from, to, 200));
 }
