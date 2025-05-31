@@ -27,8 +27,16 @@ jobs:
           cmake --build build
       - name: Run tests
         run: |
+          build
+          echo " "
+          build/banking
+          echo " "
+          build/tests
+          echo " "
           build/tests/check_acc
+          echo " "
           build/tests/check_tr
+          echo " "
       - name: ls
         run: |
           ls build/tests/CMakeFiles/check_acc.dir
