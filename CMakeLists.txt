@@ -15,7 +15,8 @@ target_compile_options(check_acc PRIVATE --coverage)
 target_link_options(check_acc PRIVATE --coverage)
 target_compile_options(check_tr PRIVATE --coverage)
 target_link_options(check_tr PRIVATE --coverage)
-
+target_include_directories(account PUBLIC account)
+target_include_directories(transaction PUBLIC transaction)
 
 if(BUILD_TESTS)
   enable_testing()
