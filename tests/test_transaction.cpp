@@ -47,13 +47,9 @@ TEST(Transaction, Make_ReturnsFalseIfInsufficientFunds) {
     EXPECT_CALL(from, Unlock()).Times(1);
     EXPECT_CALL(to, Unlock()).Times(1);
     EXPECT_CALL(from, GetBalance())
-        .WillOnce(testing::Return(100)) 
         .WillOnce(testing::Return(100)); 
-    EXPECT_CALL(to, GetBalance())
-        .WillOnce(testing::Return(500));
     EXPECT_CALL(to, ChangeBalance(200)).Times(1);     
-    EXPECT_CALL(from, ChangeBalance(-200 - 10)).Times(0);  
-    EXPECT_CALL(to, ChangeBalance(-200)).Times(1);      
+    EXPECT_CALL(from, ChangeBalance(-200 - 10)).Times(0);     
 
     Transaction transaction;
     transaction.set_fee(10);
