@@ -43,20 +43,15 @@ TEST(Transaction, SimpleTest) {
 	EXPECT_FALSE(tr.Make(ac2, ac1, 300));
 }
 
-TEST(Transaction, Make_SavesToDatabaseCorrectly) {
-    MockAccount from(1, 1000);
-    MockAccount to(2, 500);
-
-    EXPECT_CALL(from, Lock()).Times(1);
-    EXPECT_CALL(to, Lock()).Times(1);
-    EXPECT_CALL(from, Unlock()).Times(1);
-    EXPECT_CALL(to, Unlock()).Times(1);
-    EXPECT_CALL(from, ChangeBalance(_)).Times(1);
-    EXPECT_CALL(to, ChangeBalance(_)).Times(1);
-    EXPECT_CALL(from, GetBalance()).Times(AtLeast(1)).WillRepeatedly(Return(1000));
-    EXPECT_CALL(to, GetBalance()).Times(AtLeast(1)).WillRepeatedly(Return(500));
-
-    Transaction transaction;
-    transaction.set_fee(10);
-    EXPECT_TRUE(transaction.Make(from, to, 100));
+TEST(TransactionTest, MakeTransfer) {
+    Account from(1, 500);
+    Account to(2, 300);
+    Transaction ts;
+    
+    from.Lock();
+    to.Lock();
+    
+    ASSERT_TRUE(ts.Make(from, to, 150));
+    ASSERT_EQ(from.GetBalance(), 500 - 150 - ts.fee());
+    ASSERT_EQ(to.GetBalance(), 300 + 150);
 }
