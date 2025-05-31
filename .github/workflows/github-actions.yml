@@ -33,11 +33,10 @@ jobs:
         run: |
           ls build/tests/CMakeFiles/check_acc.dir
           ls build/tests/CMakeFiles/check_tr.dir
-          ls build/banking/CMakeFiles/banking.dir
       - name: Generate coverage report
         run: |
           cd build
-          lcov -c -d banking/CMakeFiles/banking.dir --ignore-errors mismatch --include *.cpp --output-file coverage.info
+          lcov -c -d banking/CMakeFiles --ignore-errors mismatch --include *.cpp --output-file coverage.info
       - name: Coveralls GitHub Action
         uses: coverallsapp/github-action@v2
         with:
