@@ -37,8 +37,9 @@ jobs:
           echo " "
           ls build/banking
           echo " "
-          ls build/banking/CMakeFiles
+          ls build/banking/CMakeFiles/account.dir
           echo " "
+          ls build/banking/CMakeFiles/transaction.dir
           echo " "
           ls build/tests
           echo " "
