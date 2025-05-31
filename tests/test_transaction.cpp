@@ -39,18 +39,23 @@ TEST(Transaction, SimpleTest) {
 	EXPECT_FALSE(tr.Make(ac2, ac1, 300));
 }
 
-TEST(Transaction, Make_SavesToDatabaseCorrectly) {
-    AccountMock from(1, 1000);
-    AccountMock to(2, 500);
+TEST(Transaction, Make_ReturnsFalseIfInsufficientFunds) {
+    AccountMock from(1, 100);
+    AccountMock to(2, 500); 
     EXPECT_CALL(from, Lock()).Times(1);
     EXPECT_CALL(to, Lock()).Times(1);
     EXPECT_CALL(from, Unlock()).Times(1);
     EXPECT_CALL(to, Unlock()).Times(1);
-    EXPECT_CALL(from, ChangeBalance(testing::_)).Times(1);
-    EXPECT_CALL(to, ChangeBalance(testing::_)).Times(1);
-    EXPECT_CALL(from, GetBalance()).Times(testing::AtLeast(1)).WillRepeatedly(testing::Return(1000));
-    EXPECT_CALL(to, GetBalance()).Times(testing::AtLeast(1)).WillRepeatedly(testing::Return(500));
+    EXPECT_CALL(from, GetBalance())
+        .WillOnce(testing::Return(100)) 
+        .WillOnce(testing::Return(100)); 
+    EXPECT_CALL(to, GetBalance())
+        .WillOnce(Return(500));
+    EXPECT_CALL(to, ChangeBalance(200)).Times(1);     
+    EXPECT_CALL(from, ChangeBalance(-200 - 10)).Times(0);  
+    EXPECT_CALL(to, ChangeBalance(-200)).Times(1);      
+
     Transaction transaction;
     transaction.set_fee(10);
-    EXPECT_TRUE(transaction.Make(from, to, 100));
+    EXPECT_FALSE(transaction.Make(from, to, 200));
 }
