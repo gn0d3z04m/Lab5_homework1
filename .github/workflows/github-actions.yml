@@ -25,6 +25,7 @@ jobs:
           cmake .. -DBUILD_TESTS=ON -DCMAKE_CXX_FLAGS='--coverage'
       - name: Build project
         run: |
+          cd build
           cmake --build .
       - name: Run tests
         run: |
