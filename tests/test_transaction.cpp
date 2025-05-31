@@ -40,8 +40,8 @@ TEST(Transaction, SimpleTest) {
 }
 
 TEST(Transaction, Make_SavesToDatabaseCorrectly) {
-    MockAccount from(1, 1000);
-    MockAccount to(2, 500);
+    AccountMock from(1, 1000);
+    AccountMock to(2, 500);
     EXPECT_CALL(from, Lock()).Times(1);
     EXPECT_CALL(to, Lock()).Times(1);
     EXPECT_CALL(from, Unlock()).Times(1);
