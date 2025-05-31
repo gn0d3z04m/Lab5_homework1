@@ -50,6 +50,8 @@ jobs:
           ls build/tests/CMakeFiles/check_tr.dir
           echo " "
           find build -name "*.gcda"
+          echo " "
+          find build -name "*.gcno"
       - name: Generate coverage report
         run: |
           cd build
