@@ -3,19 +3,23 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-class AccountMock : public Account {
+using ::testing::Return;
+using ::testing::_;
+using ::testing::AtLeast;
+
+class MockAccount : public Account {
 public:
-	AccountMock(int id, int balance) : Account(id, balance) {}
-	MOCK_CONST_METHOD0(GetBalance, int());
-	MOCK_METHOD1(ChangeBalance, void(int diff));
-	MOCK_METHOD0(Lock, void());
-	MOCK_METHOD0(Unlock, void());
+    MockAccount(int id, int balance) : Account(id, balance) {}
+    MOCK_METHOD(int, GetBalance, (), (const, override));
+    MOCK_METHOD(void, ChangeBalance, (int), (override));
+    MOCK_METHOD(void, Lock, (), (override));
+    MOCK_METHOD(void, Unlock, (), (override));
 };
 
 TEST(Transaction, Mock) {
 	Transaction tr;
-	AccountMock ac1(1, 50);
-	AccountMock ac2(2, 500);
+	MockAccount ac1(1, 50);
+	MockAccount ac2(2, 500);
 	EXPECT_CALL(ac1, ChangeBalance(testing::_)).Times(2);
 	EXPECT_CALL(ac1, Lock()).Times(1);
 	EXPECT_CALL(ac1, Unlock()).Times(1);
@@ -40,18 +44,22 @@ TEST(Transaction, SimpleTest) {
 }
 
 TEST(Transaction, Make_ReturnsFalseIfInsufficientFunds) {
-    AccountMock from(1, 100);
-    AccountMock to(2, 500); 
+    MockAccount from(1, 100);
+    MockAccount to(2, 500);  
     EXPECT_CALL(from, Lock()).Times(1);
     EXPECT_CALL(to, Lock()).Times(1);
     EXPECT_CALL(from, Unlock()).Times(1);
     EXPECT_CALL(to, Unlock()).Times(1);
     EXPECT_CALL(from, GetBalance())
-        .WillOnce(testing::Return(100)); 
-    EXPECT_CALL(to, ChangeBalance(-200)).Times(1);     
-    EXPECT_CALL(from, ChangeBalance(-200 - 10)).Times(0);     
+        .WillOnce(Return(100)) 
+        .WillOnce(Return(100)); 
+    EXPECT_CALL(to, GetBalance())
+        .WillOnce(Return(500));
+    EXPECT_CALL(to, ChangeBalance(200)).Times(1);      
+    EXPECT_CALL(from, ChangeBalance(-200 - 10)).Times(0);  
+    EXPECT_CALL(to, ChangeBalance(-200)).Times(1);      
 
     Transaction transaction;
-    transaction.set_fee(10);
+    transaction.set_fee(10); 
     EXPECT_FALSE(transaction.Make(from, to, 200));
 }
