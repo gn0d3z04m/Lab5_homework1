@@ -7,6 +7,12 @@ include(CTest)
 
 include_directories("banking/" "tests/" "third-party/")
 
+add_library(account banking/Account.cpp banking/Account.h)
+add_library(transaction banking/Transaction.cpp banking/Transaction.h)
+set_target_properties(account PROPERTIES LINKER_LANGUAGE CXX)
+set_target_properties(transaction PROPERTIES LINKER_LANGUAGE CXX)
+target_link_libraries(transaction account)
+
 add_subdirectory(banking)
 add_subdirectory(tests)
 add_subdirectory(third-party/gtest)
