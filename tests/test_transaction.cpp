@@ -41,6 +41,19 @@ TEST(Transaction, SimpleTest) {
 	EXPECT_FALSE(tr.Make(ac1, ac2, 199));
 	EXPECT_FALSE(tr.Make(ac2, ac1, 500));
 	EXPECT_FALSE(tr.Make(ac2, ac1, 300));
-	EXPECT_TRUE(tr.Make(ac2, ac1, 200));
+}
+
+TEST(Transaction, SuccessfulTransaction) {
+    Transaction tr;
+    tr.set_fee(10); // Устанавливаем комиссию
+    Account from(1, 1000);
+    Account to(2, 200);
+
+    // Успешный перевод: баланс > суммы + комиссия
+    EXPECT_TRUE(tr.Make(from, to, 500));
+    
+    // Проверяем изменения балансов
+    EXPECT_EQ(from.GetBalance(), 490);   // 1000 - (500 + 10)
+    EXPECT_EQ(to.GetBalance(), 700);     // 200 + 500
 }
 
